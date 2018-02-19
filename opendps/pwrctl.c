@@ -105,22 +105,22 @@ void pwrctl_enable_vout(bool enable)
 {
   v_out_enabled = enable;
   if (v_out_enabled) {
+    DAC_DHR12R1 = pwrctl_calc_vout_dac(v_out);
+    DAC_DHR12R2 = 0xda2;
 #ifdef DPS5015
     gpio_set(GPIOB, GPIO11);    // B11 is fan control on '5015
     gpio_clear(GPIOC, GPIO13);  // C13 is power control on '5015
 #else // DPS5015
-    DAC_DHR12R1 = pwrctl_calc_vout_dac(v_out);
-    DAC_DHR12R2 = 0xda2;
     gpio_clear(GPIOB, GPIO11);  // B11 is power control on '5005
 #endif // DPS5015
   } else {
+    /** Needed for the DPS5005 "communications version" (the one with BT/USB) */
+    DAC_DHR12R1 = 0;
+    DAC_DHR12R2 = 0;
 #ifdef DPS5015
     gpio_clear(GPIOB, GPIO11); // B11 is fan control on '5015
     gpio_set(GPIOC, GPIO13);   // C13 is power control on '5015
 #else // DPS5015
-    /** Needed for the DPS5005 "communications version" (the one with BT/USB) */
-    DAC_DHR12R1 = 0;
-    DAC_DHR12R2 = 0;
     gpio_set(GPIOB, GPIO11);  // B11 is power control on '5005
 #endif // DPS5015
   }

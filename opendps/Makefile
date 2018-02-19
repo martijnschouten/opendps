@@ -8,10 +8,10 @@ SPLASH_SCREEN := 0
 
 # Build wifi version (only change being that the wifi icon will start flashing
 # on power up)
-WIFI := 1
+WIFI := 0
 
 # Maximum current your DPS model can provide. Eg 5000mA for the DPS5005
-MAX_CURRENT := 5000
+MAX_CURRENT := 9000
 # Please note that the UI currently does not handle settings larger that 9.99A
 
 GIT_VERSION := $(shell git describe --abbrev=4 --dirty --always --tags)
